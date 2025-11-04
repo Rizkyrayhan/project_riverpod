@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:project_riverpod/providers/home_provider.dart';
 import 'package:project_riverpod/screens/dashboard_screen.dart';
-import 'package:project_riverpod/screens/home/home_provider.dart';
+import 'package:project_riverpod/screens/mahasiswa/mahasiswa_add_screen.dart';
 import 'package:project_riverpod/screens/mahasiswa/mahasiswa_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -10,7 +11,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeController = ref.watch(homeProvider); // huruf kecil di awal
+    final HomeController = ref.watch(HomeProvider);
     return DashboardAdmin();
   }
 }
@@ -25,16 +26,35 @@ class DashboardAdmin extends ConsumerWidget {
     final _index = ref.watch(indexProvider);
 
     List<Map> _fragment = [
-      {'title': 'halaman utama', 'body': DashboardScreen()},
-      {'title': 'mahasiswa', 'body': MahasiswaScreen()},
+      {
+        'title': 'Halaman Utama',
+        'body': DashboardScreen(),
+        'add': MahasiswaAddScreen(),
+      },
+      {
+        'title': 'Mahasiswa',
+        'body': MahasiswaScreen(),
+        'add': MahasiswaAddScreen(),
+      },
     ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_fragment[_index]['title']),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.add_circle_outline)),
-        ],
         backgroundColor: Colors.teal,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => _fragment[_index]['add'],
+                ),
+              );
+            },
+            icon: Icon(Icons.add_circle_outline),
+          ),
+        ],
       ),
       drawer: drawer(ref, context),
       body: _fragment[_index]['body'],
@@ -62,7 +82,7 @@ class DashboardAdmin extends ConsumerWidget {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  'Manager',
+                  'Admin',
                   style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
               ],
@@ -73,9 +93,9 @@ class DashboardAdmin extends ConsumerWidget {
               ref.read(indexProvider.notifier).state = 0;
               Navigator.pop(context);
             },
-            leading: const Icon(Icons.home),
-            title: const Text("Halaman Utama"),
-            trailing: const Icon(Icons.navigate_next),
+            leading: Icon(Icons.home),
+            title: Text("Halaman Utama"),
+            trailing: Icon(Icons.navigate_next),
             iconColor: Colors.teal,
             textColor: Colors.teal,
           ),
@@ -84,9 +104,9 @@ class DashboardAdmin extends ConsumerWidget {
               ref.read(indexProvider.notifier).state = 1;
               Navigator.pop(context);
             },
-            leading: const Icon(Icons.people),
-            title: const Text("Mahasiswa"),
-            trailing: const Icon(Icons.navigate_next),
+            leading: Icon(Icons.home),
+            title: Text("Mahasiswa"),
+            trailing: Icon(Icons.navigate_next),
             iconColor: Colors.teal,
             textColor: Colors.teal,
           ),
