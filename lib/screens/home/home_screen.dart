@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:project_riverpod/providers/home_provider.dart';
 import 'package:project_riverpod/screens/dashboard_screen.dart';
+import 'package:project_riverpod/screens/dosen/dosen_add_screen.dart';
+import 'package:project_riverpod/screens/dosen/dosen_screen.dart';
 import 'package:project_riverpod/screens/mahasiswa/mahasiswa_add_screen.dart';
 import 'package:project_riverpod/screens/mahasiswa/mahasiswa_screen.dart';
 
@@ -36,6 +38,11 @@ class DashboardAdmin extends ConsumerWidget {
         'body': MahasiswaScreen(),
         'add': MahasiswaAddScreen(),
       },
+      {
+        'title':'Dosen',
+        'body': DosenScreen(),
+        'add': DosenAddScreen(),
+      }
     ];
 
     return Scaffold(
@@ -104,12 +111,23 @@ class DashboardAdmin extends ConsumerWidget {
               ref.read(indexProvider.notifier).state = 1;
               Navigator.pop(context);
             },
-            leading: Icon(Icons.home),
+            leading: Icon(Icons.people),
             title: Text("Mahasiswa"),
             trailing: Icon(Icons.navigate_next),
             iconColor: Colors.teal,
             textColor: Colors.teal,
           ),
+          ListTile(
+            onTap: () {
+              ref.read(indexProvider.notifier).state = 2;
+              Navigator.pop(context);
+            },
+            leading: Icon(Icons.people),
+            title: Text("Dosen"),
+            trailing: Icon(Icons.navigate_next),
+            iconColor: Colors.teal,
+            textColor: Colors.teal,
+          )
         ],
       ),
     );
