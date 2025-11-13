@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_riverpod/providers/mahasiswa_provider.dart';
+import 'package:project_riverpod/screens/mahasiswa/mahasiswa_update_screen.dart';
 
 class MahasiswaScreen extends ConsumerWidget {
   const MahasiswaScreen({super.key});
@@ -11,7 +12,18 @@ class MahasiswaScreen extends ConsumerWidget {
       builder:
           (context) => SimpleDialog(
             children: [
-              ListTile(onTap: () {}, title: Text('Update')),
+              ListTile(onTap: () {
+                ref.refresh(mahasiswaDataProvider(id));
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MahasiswaUpdateScreen(),
+                    settings: RouteSettings(arguments: id),
+                    ),
+                );
+
+              }, title: Text('Update')),
               ListTile(
                 onTap: () {
                   Navigator.pop(context);

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 class MahasiswaNotifier extends StateNotifier<List<DocumentSnapshot>> {
@@ -30,9 +31,28 @@ class MahasiswaNotifier extends StateNotifier<List<DocumentSnapshot>> {
       print("Error deleting mahasiswa: $e");
     }
   }
+
+  Future<Map<String, dynamic>?> getData(String id) async {
+    try {
+      DocumentSnapshot doc =
+          await FirebaseFirestore.instance
+              .collection('mahasiswa')
+              .doc(id)
+              .get();
+
+      return doc.data() as Map<String, dynamic>?;
+    } on Exception catch (e) {
+      print("Error getting mahasiswa: $e");
+    }
+  }
 }
 
 final MahasiswaProvider =
     StateNotifierProvider<MahasiswaNotifier, List<DocumentSnapshot>>(
       (ref) => MahasiswaNotifier(),
     );
+
+final mahasiswaDataProvider =
+    FutureProvider.family<Map<String, dynamic>?, String>((ref, id) {
+      return ref.watch(MahasiswaProvider.notifier).getData(id);
+    });
