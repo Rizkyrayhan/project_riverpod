@@ -28,6 +28,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ElevatedButton(onPressed: () {}, child: Text("Login")),
             SizedBox(height: 10),
             TextButton(onPressed: () {}, child: Text("Reset Password")),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Belum punya akun?"),
+                TextButton(onPressed: () {}, child: Text("Daftar disini!")),
+              ],
+            ),
           ],
         ),
       ),
