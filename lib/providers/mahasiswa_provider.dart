@@ -45,6 +45,23 @@ class MahasiswaNotifier extends StateNotifier<List<DocumentSnapshot>> {
       print("Error getting mahasiswa: $e");
     }
   }
+
+  Future<void> updateMahasiswa(
+    String npm,
+    String nama,
+    String prodi,
+    String id,
+  ) async {
+    try {
+      await FirebaseFirestore.instance.collection('mahasiswa').doc(id).update({
+        'npm': npm,
+        'nama': nama,
+        'prodi': prodi,
+      });
+    } catch (e) {
+      print("Error updating mahasiswa: $e");
+    }
+  }
 }
 
 final MahasiswaProvider =
