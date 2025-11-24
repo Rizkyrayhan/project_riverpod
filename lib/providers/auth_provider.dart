@@ -29,4 +29,12 @@ class AuthNotifier extends StateNotifier<User?> {
       }
     }
   }
+  Future<void> logout() async {
+    await _auth.signOut();
+  } 
 }
+
+
+final authProvider = StateNotifierProvider<AuthNotifier, User?>(
+  (ref) => AuthNotifier(),
+);

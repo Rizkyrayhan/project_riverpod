@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:project_riverpod/providers/auth_provider.dart';
 import 'package:project_riverpod/providers/home_provider.dart';
+import 'package:project_riverpod/screens/auth/login_screen.dart';
 import 'package:project_riverpod/screens/dashboard_screen.dart';
 import 'package:project_riverpod/screens/dosen/dosen_add_screen.dart';
 import 'package:project_riverpod/screens/dosen/dosen_screen.dart';
@@ -38,11 +40,7 @@ class DashboardAdmin extends ConsumerWidget {
         'body': MahasiswaScreen(),
         'add': MahasiswaAddScreen(),
       },
-      {
-        'title':'Dosen',
-        'body': DosenScreen(),
-        'add': DosenAddScreen(),
-      }
+      {'title': 'Dosen', 'body': DosenScreen(), 'add': DosenAddScreen()},
     ];
 
     return Scaffold(
@@ -127,7 +125,21 @@ class DashboardAdmin extends ConsumerWidget {
             trailing: Icon(Icons.navigate_next),
             iconColor: Colors.teal,
             textColor: Colors.teal,
-          )
+          ),
+          ListTile(
+            onTap: () async {
+              await ref.read(authProvider.notifier).logout();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => LoginScreen()),
+              );
+            },
+            leading: Icon(Icons.logout),
+            title: Text("Logout"),
+            trailing: Icon(Icons.navigate_next),
+            iconColor: Colors.teal,
+            textColor: Colors.teal,
+          ),
         ],
       ),
     );
