@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:project_riverpod/providers/auth_provider.dart';
 import 'package:project_riverpod/providers/home_provider.dart';
 import 'package:project_riverpod/screens/auth/login_screen.dart';
@@ -15,7 +14,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final HomeController = ref.watch(HomeProvider);
+    final homeController = ref.watch(HomeProvider); 
     return DashboardAdmin();
   }
 }
@@ -31,16 +30,16 @@ class DashboardAdmin extends ConsumerWidget {
 
     List<Map> _fragment = [
       {
-        'title': 'Halaman Utama',
+        'title': 'halaman utama',
         'body': DashboardScreen(),
         'add': MahasiswaAddScreen(),
       },
       {
-        'title': 'Mahasiswa',
+        'title': 'mahasiswa',
         'body': MahasiswaScreen(),
         'add': MahasiswaAddScreen(),
       },
-      {'title': 'Dosen', 'body': DosenScreen(), 'add': DosenAddScreen()},
+      {'title': 'dosen', 'body': DosenScreen(), 'add': DosenAddScreen()}
     ];
 
     return Scaffold(
@@ -87,7 +86,7 @@ class DashboardAdmin extends ConsumerWidget {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  'Admin',
+                  'Manager',
                   style: TextStyle(fontSize: 12, color: Colors.white),
                 ),
               ],
@@ -98,9 +97,9 @@ class DashboardAdmin extends ConsumerWidget {
               ref.read(indexProvider.notifier).state = 0;
               Navigator.pop(context);
             },
-            leading: Icon(Icons.home),
-            title: Text("Halaman Utama"),
-            trailing: Icon(Icons.navigate_next),
+            leading: const Icon(Icons.home),
+            title: const Text("Halaman Utama"),
+            trailing: const Icon(Icons.navigate_next),
             iconColor: Colors.teal,
             textColor: Colors.teal,
           ),
@@ -109,24 +108,25 @@ class DashboardAdmin extends ConsumerWidget {
               ref.read(indexProvider.notifier).state = 1;
               Navigator.pop(context);
             },
-            leading: Icon(Icons.people),
-            title: Text("Mahasiswa"),
-            trailing: Icon(Icons.navigate_next),
+            leading: const Icon(Icons.people),
+            title: const Text("Mahasiswa"),
+            trailing: const Icon(Icons.navigate_next),
             iconColor: Colors.teal,
             textColor: Colors.teal,
           ),
+
           ListTile(
             onTap: () {
               ref.read(indexProvider.notifier).state = 2;
               Navigator.pop(context);
             },
-            leading: Icon(Icons.people),
-            title: Text("Dosen"),
-            trailing: Icon(Icons.navigate_next),
+            leading: const Icon(Icons.school),
+            title: const Text("Dosen"),
+            trailing: const Icon(Icons.navigate_next),
             iconColor: Colors.teal,
-            textColor: Colors.teal,
-          ),
-          ListTile(
+            textColor: Colors.teal,),
+            
+            ListTile(
             onTap: () async {
               await ref.read(authProvider.notifier).logout();
               Navigator.pushReplacement(
